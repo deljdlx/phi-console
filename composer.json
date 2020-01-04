@@ -3,13 +3,15 @@
 	"description": "Phi console",
 
 	"repositories": [
+
 	],
 	"require":
 	{
+
 	},
 	"autoload": {
 		"psr-4": {
-			"Phi\\Container\\": "source"
+			"Phi\\Console\\": "source/class"
 		},
 		"files": [
 

@@ -7,7 +7,8 @@ class Command
 {
 
     private $commandLine;
-    private $arguments;
+
+    private $arguments = [];
 
     private $argv;
     private $argc;
@@ -25,6 +26,12 @@ class Command
      * @var Option[]
      */
     private $options = [];
+
+
+    /**
+     * @var Callable
+     */
+    private $callback;
 
     public function __construct($argv = null, $argc = null)
     {
@@ -47,7 +54,7 @@ class Command
     {
         $this->extractArguments();
         $this->executeFilters();
-        return $this;
+        return $this->main();
     }
 
 
@@ -191,6 +198,21 @@ class Command
         $this->arguments[$argumentName] = $value;
 
         return $this;
+    }
+
+
+    public function setMain(Callable $callback)
+    {
+        $this->callback = $callback;
+        return $this;
+    }
+
+    private function main()
+    {
+        if($this->callback) {
+            return call_user_func_array($this->callback, [$this]);
+        }
+
     }
 
 
